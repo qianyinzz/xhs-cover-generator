@@ -447,12 +447,12 @@ export default function App() {
               </div>
 
               <div className="flex-1 flex flex-col justify-center space-y-4 px-2">
-                {[1, 2, 3].map((num) => (
-                  <div key={num} className="flex items-center bg-white/80 p-4 rounded-xl shadow-sm border border-gray-100/50">
+                {tags.slice(0, 3).map((tag, i) => (
+                  <div key={i} className="flex items-center bg-white/80 p-4 rounded-xl shadow-sm border border-gray-100/50">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-xl mr-4" style={{ backgroundColor: accentColor, color: '#fff' }}>
-                      {num}
+                      {i + 1}
                     </div>
-                    <div className="flex-1 h-4 rounded-full opacity-20" style={{ backgroundColor: accentColor }}></div>
+                    <span className="flex-1 text-base font-semibold">{tag}</span>
                   </div>
                 ))}
               </div>
