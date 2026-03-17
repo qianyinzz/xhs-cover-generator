@@ -1,5 +1,5 @@
 import { useState, useRef, FormEvent } from 'react';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import { Download, Sparkles, LayoutTemplate, Palette, Type, Hash, Image as ImageIcon, BookOpen } from 'lucide-react';
 
 // Types
@@ -240,15 +240,15 @@ export default function App() {
   const handleDownload = async () => {
     if (!coverRef.current) return;
     try {
-      const canvas = await html2canvas(coverRef.current, {
-        scale: 2, // Higher resolution
-        useCORS: true,
-        backgroundColor: null,
+      // Run twice to ensure fonts and styles are fully rendered
+      await toPng(coverRef.current, { pixelRatio: 3 });
+      const dataUrl = await toPng(coverRef.current, {
+        pixelRatio: 3,
+        cacheBust: true,
       });
-      const url = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = `xiaohongshu-cover-${Date.now()}.png`;
-      link.href = url;
+      link.href = dataUrl;
       link.click();
     } catch (error) {
       console.error('Failed to generate image', error);
